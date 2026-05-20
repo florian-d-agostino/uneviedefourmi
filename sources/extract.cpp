@@ -5,10 +5,20 @@
 #include <map>
 #include <utility>
 
+using std::cout;
+using std::endl;
+using std::string;
+using std::vector;
+using std::map;
+using std::ifstream;
+using std::cerr;
+using std::getline;
+using std::stoi;
+
 // Helper function to remove leading and trailing whitespaces from a string
-std::string trim(const std::string& str) {
+string trim(const string& str) {
     size_t first = str.find_first_not_of(" \t\r\n");
-    if (first == std::string::npos) return "";
+    if (first == string::npos) return "";
     size_t last = str.find_last_not_of(" \t\r\n");
     return str.substr(first, (last - first + 1));
 }
@@ -17,38 +27,38 @@ std::string trim(const std::string& str) {
 class Extract {
 private:
     int ants; // Number of ants
-    std::map<std::string, int> rooms; // Map: Room name -> Capacity
-    std::map<std::string, std::vector<std::string>> connexions; // Adjacency List: Room name -> Neighboring rooms
+    map<string, int> rooms; // Map: Room name -> Capacity
+    map<string, vector<string>> connexions; // Adjacency List: Room name -> Neighboring rooms
 
 public:
     Extract() : ants(0) {}
 
     // Reads the file, parses each line and extracts the ants, rooms, and connections
-    bool lireFichier(const std::string& nomFichier) {
-        std::ifstream fichier(nomFichier);
+    bool lireFichier(const string& nomFichier) {
+        ifstream fichier(nomFichier);
 
         // Check if the file is successfully opened
         if (!fichier.is_open()) {
-            std::cerr << "Erreur : Impossible d'ouvrir le fichier " << nomFichier << std::endl;
+            cerr << "Erreur : Impossible d'ouvrir le fichier " << nomFichier << endl;
             return false;
         }
 
-        std::string ligne;
-        while (std::getline(fichier, ligne)) {
+        string ligne;
+        while (getline(fichier, ligne)) {
             ligne = trim(ligne);
             if (ligne.empty()) continue; // Skip empty lines
 
             size_t posEgal = ligne.find('=');
             size_t posTiret = ligne.find('-');
 
-            if (posEgal != std::string::npos) {
+            if (posEgal != string::npos) {
                 // Line defines the number of ants (e.g., f=50)
-                ants = std::stoi(trim(ligne.substr(posEgal + 1)));
+                ants = stoi(trim(ligne.substr(posEgal + 1)));
             }
-            else if (posTiret != std::string::npos) {
+            else if (posTiret != string::npos) {
                 // Line defines a connection between two rooms (e.g., RoomA - RoomB)
-                std::string src = trim(ligne.substr(0, posTiret));
-                std::string dest = trim(ligne.substr(posTiret + 1));
+                string src = trim(ligne.substr(0, posTiret));
+                string dest = trim(ligne.substr(posTiret + 1));
                 
                 // Add the bidirectional edge to the adjacency list map
                 connexions[src].push_back(dest);
@@ -68,13 +78,13 @@ public:
                 size_t posAccOuv = ligne.find('{');
                 size_t posAccFer = ligne.find('}');
                 
-                std::string nomRoom;
+                string nomRoom;
                 int capacity = 1; // Default capacity is 1
 
-                if (posAccOuv != std::string::npos && posAccFer != std::string::npos && posAccFer > posAccOuv) {
+                if (posAccOuv != string::npos && posAccFer != string::npos && posAccFer > posAccOuv) {
                     nomRoom = trim(ligne.substr(0, posAccOuv));
-                    std::string capStr = trim(ligne.substr(posAccOuv + 1, posAccFer - posAccOuv - 1));
-                    capacity = std::stoi(capStr);
+                    string capStr = trim(ligne.substr(posAccOuv + 1, posAccFer - posAccOuv - 1));
+                    capacity = stoi(capStr);
                 }
                 else {
                     nomRoom = ligne;
@@ -93,12 +103,12 @@ public:
     int getants() const { return ants; }
     
     // Get the map of rooms and their capacities
-    const std::map<std::string, int>& getRooms() const { 
+    const map<string, int>& getRooms() const { 
         return rooms; 
     }
     
     // Get the adjacency list representing the connections
-    const std::map<std::string, std::vector<std::string>>& getConnexions() const { 
+    const map<string, vector<string>>& getConnexions() const { 
         return connexions; 
     }
 };

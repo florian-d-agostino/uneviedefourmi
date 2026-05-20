@@ -1,6 +1,5 @@
 #include <iostream>
 #include "extract.cpp"
-
 int main() {
     Extract extracteur;
     extracteur.lireFichier("ressources/fourmilieres_texte/fourmiliere_0.txt");    
