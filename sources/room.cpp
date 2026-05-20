@@ -5,12 +5,19 @@
 using namespace std;
 
 
+
+
+
 // Constructor
 Room::Room(const string& name, int Antmax) {
     this->name = name;
     this->Antmax = Antmax;
     this->Ant = 0;
 }
+
+
+
+
 
 // Getters for Haik
 string Room::getName() const {
@@ -32,12 +39,17 @@ const vector<Room*>& Room::getDirection() const {
 
 
 
+
+
+
 // Link rooms
 void Room::linkRoom(Room* neighborRoom) {
-    if (neighborRoom != nullptr) {  // check if room does not exist
+    if (neighborRoom != nullptr) {
         Direction.push_back(neighborRoom);
     }
 }
+
+
 
 // Enter function
 bool Room::enter() {
@@ -49,6 +61,8 @@ bool Room::enter() {
     return true;
 }
 
+
+
 // Leave function
 void Room::leave() {
     if (Ant > 0) {
@@ -57,10 +71,14 @@ void Room::leave() {
     }
 }
 
+
+
 // Check if room is full
 bool Room::isFull() const {
     return Ant >= Antmax;
 }
+
+
 
 // Function to build the room graph
 unordered_map<string, Room*> buildRoomGraph(
@@ -69,12 +87,14 @@ unordered_map<string, Room*> buildRoomGraph(
 ) {
     unordered_map<string, Room*> rooms;
 
+
     // Create rooms with max capacity
     for (const auto& pair : dico1) {
         const string& name = pair.first;
         int capacity = pair.second;
         rooms[name] = new Room(name, capacity);
     }
+
 
     // Link rooms according to connections
     for (const auto& pair : dico2) {

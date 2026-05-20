@@ -7,12 +7,19 @@
 
 using namespace std;
 
+
+
+
+
 class Room {
 private:
     string name;
     int Antmax;
     int Ant;
     vector<Room*> Direction;
+
+
+
 
 public:
     // Constructor
@@ -31,7 +38,9 @@ public:
     bool isFull() const;
 };
 
-// Connections via dictionaries
+
+
+// Connections dictionaries
 unordered_map<string, Room*> buildRoomGraph(
     const unordered_map<string, int>& dico1,
     const unordered_map<string, vector<string>>& dico2
