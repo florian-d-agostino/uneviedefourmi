@@ -16,12 +16,12 @@ std::string trim(const std::string& str) {
 // Class to parse and extract information from the labyrinth config file
 class Extract {
 private:
-    int fourmis; // Number of ants
+    int ants; // Number of ants
     std::map<std::string, int> rooms; // Map: Room name -> Capacity
     std::map<std::string, std::vector<std::string>> connexions; // Adjacency List: Room name -> Neighboring rooms
 
 public:
-    Extract() : fourmis(0) {}
+    Extract() : ants(0) {}
 
     // Reads the file, parses each line and extracts the ants, rooms, and connections
     bool lireFichier(const std::string& nomFichier) {
@@ -43,7 +43,7 @@ public:
 
             if (posEgal != std::string::npos) {
                 // Line defines the number of ants (e.g., f=50)
-                fourmis = std::stoi(trim(ligne.substr(posEgal + 1)));
+                ants = std::stoi(trim(ligne.substr(posEgal + 1)));
             }
             else if (posTiret != std::string::npos) {
                 // Line defines a connection between two rooms (e.g., RoomA - RoomB)
@@ -90,7 +90,7 @@ public:
     }
 
     // Get the total number of ants
-    int getFourmis() const { return fourmis; }
+    int getants() const { return ants; }
     
     // Get the map of rooms and their capacities
     const std::map<std::string, int>& getRooms() const { 
