@@ -4,10 +4,15 @@
 
 int main() {
     Extract extracteur;
-    extracteur.lireFichier("ressources/fourmilieres_texte/fourmiliere_0.txt");    
+    if (!extracteur.lireFichier("ressources/fourmilieres_texte/fourmiliere_0.txt")) {
+        std::cerr << "Erreur de lecture du fichier" << std::endl;
+        return 1;
+    }    
     short ant = extracteur.getants();
     const auto& rooms = extracteur.getRooms();
     const auto& connexions = extracteur.getConnexions();
+
+    std::cout << "Nombre de fourmis : " << ant << std::endl;
 
     // Build the room graph
     unordered_map<string, Room*> roomGraph = buildRoomGraph(rooms, connexions);
@@ -19,3 +24,5 @@ int main() {
 
     return 0;
 }
+
+
