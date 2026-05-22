@@ -26,8 +26,8 @@ string trim(const string& str) {
 // Class to parse and extract information from the labyrinth config file
 class Extract {
 private:
-    int ants; // Number of ants
-    map<string, int> rooms; // Map: Room name -> Capacity
+    short ants; // Number of ants
+    map<string, short> rooms; // Map: Room name -> Capacity
     map<string, vector<string>> connexions; // Adjacency List: Room name -> Neighboring rooms
 
 public:
@@ -53,7 +53,7 @@ public:
 
             if (posEgal != string::npos) {
                 // Line defines the number of ants (e.g., f=50)
-                ants = stoi(trim(ligne.substr(posEgal + 1)));
+                ants = static_cast<short>(stoi(trim(ligne.substr(posEgal + 1))));
             }
             else if (posTiret != string::npos) {
                 // Line defines a connection between two rooms (e.g., RoomA - RoomB)
@@ -67,10 +67,10 @@ public:
                 // Initialize implicit rooms in the rooms map if not already present
                 // Start (Sv) and End (Sd) rooms have a large "infinite" capacity
                 if (rooms.find(src) == rooms.end()) {
-                    rooms[src] = (src == "Sv" || src == "Sd") ? 999999 : 1;
+                    rooms[src] = (src == "Sv" || src == "Sd") ? 32767 : 1;
                 }
                 if (rooms.find(dest) == rooms.end()) {
-                    rooms[dest] = (dest == "Sv" || dest == "Sd") ? 999999 : 1;
+                    rooms[dest] = (dest == "Sv" || dest == "Sd") ? 32767 : 1;
                 }
             }
             else {
@@ -79,12 +79,12 @@ public:
                 size_t posAccFer = ligne.find('}');
                 
                 string nomRoom;
-                int capacity = 1; // Default capacity is 1
+                short capacity = 1; // Default capacity is 1
 
                 if (posAccOuv != string::npos && posAccFer != string::npos && posAccFer > posAccOuv) {
                     nomRoom = trim(ligne.substr(0, posAccOuv));
                     string capStr = trim(ligne.substr(posAccOuv + 1, posAccFer - posAccOuv - 1));
-                    capacity = stoi(capStr);
+                    capacity = static_cast<short>(stoi(capStr));
                 }
                 else {
                     nomRoom = ligne;
@@ -100,10 +100,10 @@ public:
     }
 
     // Get the total number of ants
-    int getants() const { return ants; }
+    short getants() const { return ants; }
     
     // Get the map of rooms and their capacities
-    const map<string, int>& getRooms() const { 
+    const map<string, short>& getRooms() const { 
         return rooms; 
     }
     

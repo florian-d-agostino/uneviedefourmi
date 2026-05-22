@@ -7,9 +7,8 @@ using namespace std;
 
 
 
-
 // Constructor
-Room::Room(const string& name, int Antmax) {
+Room::Room(const string& name, short Antmax) {
     this->name = name;
     this->Antmax = Antmax;
     this->Ant = 0;
@@ -24,11 +23,11 @@ string Room::getName() const {
     return name;
 }
 
-int Room::getAntmax() const {
+short Room::getAntmax() const {
     return Antmax;
 }
 
-int Room::getAnt() const {
+short Room::getAnt() const {
     return Ant;
 }
 
@@ -82,7 +81,7 @@ bool Room::isFull() const {
 
 // Function to build the room graph
 unordered_map<string, Room*> buildRoomGraph(
-    const unordered_map<string, int>& dico1,
+    const unordered_map<string, short>& dico1,
     const unordered_map<string, vector<string>>& dico2
 ) {
     unordered_map<string, Room*> rooms;
@@ -91,7 +90,7 @@ unordered_map<string, Room*> buildRoomGraph(
     // Create rooms with max capacity
     for (const auto& pair : dico1) {
         const string& name = pair.first;
-        int capacity = pair.second;
+        short capacity = pair.second;
         rooms[name] = new Room(name, capacity);
     }
 

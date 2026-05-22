@@ -14,8 +14,8 @@ using namespace std;
 class Room {
 private:
     string name;
-    int Antmax;
-    int Ant;
+    short Antmax;
+    short Ant;
     vector<Room*> Direction;
 
 
@@ -23,12 +23,12 @@ private:
 
 public:
     // Constructor
-    Room(const string& name, int Antmax);
+    Room(const string& name, short Antmax);
 
     // Getters
     string getName() const;
-    int getAntmax() const;
-    int getAnt() const;
+    short getAntmax() const;
+    short getAnt() const;
     const vector<Room*>& getDirection() const;
 
     // Methods
@@ -42,7 +42,7 @@ public:
 
 // Connections dictionaries
 unordered_map<string, Room*> buildRoomGraph(
-    const unordered_map<string, int>& dico1,
+    const unordered_map<string, short>& dico1,
     const unordered_map<string, vector<string>>& dico2
 );
 
