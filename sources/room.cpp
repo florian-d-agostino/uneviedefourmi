@@ -35,6 +35,14 @@ const vector<Room*>& Room::getDirection() const {
     return Direction;
 }
 
+void Room::setAnt(short count) {
+    Ant = count;
+}
+
+void Room::setAntmax(short max) {
+    Antmax = max;
+}
+
 
 
 

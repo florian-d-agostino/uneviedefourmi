@@ -25,11 +25,13 @@ public:
     // Constructor
     Room(const string& name, short Antmax);
 
-    // Getters
+    // Getters and Setters
     string getName() const;
     short getAntmax() const;
     short getAnt() const;
     const vector<Room*>& getDirection() const;
+    void setAnt(short count);
+    void setAntmax(short max);
 
     // Methods
     void linkRoom(Room* neighborRoom);
