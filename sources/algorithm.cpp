@@ -1,4 +1,5 @@
 #include "../headers/algorithm.hpp"
+#include "../headers/ants.hpp"
 #include <queue>
 #include <unordered_map>
 #include <algorithm>
@@ -248,4 +249,36 @@ void Algorithm::dispatchAndSimulate(Room* start, Room* end) {
     }
     
     std::cout << "\nTotal turns required: " << (turn - 1) << " turns." << std::endl;
+}
+
+void Algorithm::runAndSimulate(Room* start, Room* end) {
+    std::cout << "\n--- SINGLE SHORTEST PATH (Dijkstra) ---" << std::endl;
+    std::vector<Room*> path = findShortestPath(start, end);
+    if (!path.empty()) {
+        for (size_t i = 0; i < path.size(); ++i) {
+            std::cout << path[i]->getName() << (i == path.size() - 1 ? "" : " -> ");
+        }
+        std::cout << std::endl;
+    } else {
+        std::cout << "No path found." << std::endl;
+    }
+
+    std::cout << "\n--- DISJOINT OPTIMIZED ROUTES ---" << std::endl;
+    std::vector<std::vector<Room*>> routes = findOptimizedRoutes(start, end);
+    if (!routes.empty()) {
+        for (size_t r = 0; r < routes.size(); ++r) {
+            std::cout << "Route " << (r + 1) << " : ";
+            for (size_t i = 0; i < routes[r].size(); ++i) {
+                std::cout << routes[r][i]->getName() << (i == routes[r].size() - 1 ? "" : " -> ");
+            }
+            std::cout << std::endl;
+        }
+    } else {
+        std::cout << "No routes found." << std::endl;
+    }
+
+    std::cout << std::endl;
+
+    // Simulate movement
+    simulateAntsMovement(start, end, routes, StartAnt);
 }

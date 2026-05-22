@@ -38,6 +38,9 @@ public:
 
     // Dispatches ants onto the optimal routes and simulates turn-by-turn movements
     void dispatchAndSimulate(Room* start, Room* end);
+
+    // Runs shortest path, optimized routes, and simulates turn-by-turn movement
+    void runAndSimulate(Room* start, Room* end);
 };
 
 #endif
