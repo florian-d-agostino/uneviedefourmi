@@ -2,14 +2,14 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <utility>
 
 using std::cout;
 using std::endl;
 using std::string;
 using std::vector;
-using std::map;
+using std::unordered_map;
 using std::ifstream;
 using std::cerr;
 using std::getline;
@@ -27,8 +27,8 @@ string trim(const string& str) {
 class Extract {
 private:
     short ants; // Number of ants
-    map<string, short> rooms; // Map: Room name -> Capacity
-    map<string, vector<string>> connexions; // Adjacency List: Room name -> Neighboring rooms
+    unordered_map<string, short> rooms; // Map: Room name -> Capacity
+    unordered_map<string, vector<string>> connexions; // Adjacency List: Room name -> Neighboring rooms
 
 public:
     Extract() : ants(0) {}
@@ -103,12 +103,12 @@ public:
     short getants() const { return ants; }
     
     // Get the map of rooms and their capacities
-    const map<string, short>& getRooms() const { 
+    const unordered_map<string, short>& getRooms() const { 
         return rooms; 
     }
     
     // Get the adjacency list representing the connections
-    const map<string, vector<string>>& getConnexions() const { 
+    const unordered_map<string, vector<string>>& getConnexions() const { 
         return connexions; 
     }
 };
