@@ -81,31 +81,31 @@ bool Room::isFull() const {
 
 // Function to build the room graph
 unordered_map<string, Room*> buildRoomGraph(
-    const unordered_map<string, short>& dico1,
-    const unordered_map<string, vector<string>>& dico2
+    const unordered_map<string, short>& rooms,
+    const unordered_map<string, vector<string>>& connexions
 ) {
-    unordered_map<string, Room*> rooms;
+    unordered_map<string, Room*> roomGraph;
 
 
     // Create rooms with max capacity
-    for (const auto& pair : dico1) {
+    for (const auto& pair : rooms) {
         const string& name = pair.first;
         short capacity = pair.second;
-        rooms[name] = new Room(name, capacity);
+        roomGraph[name] = new Room(name, capacity);
     }
 
 
     // Link rooms according to connections
-    for (const auto& pair : dico2) {
+    for (const auto& pair : connexions) {
         const string& sourceName = pair.first;
         const vector<string>& destinations = pair.second;
 
-        auto sourceIt = rooms.find(sourceName);
-        if (sourceIt != rooms.end()) {
+        auto sourceIt = roomGraph.find(sourceName);
+        if (sourceIt != roomGraph.end()) {
             Room* sourceRoom = sourceIt->second;
             for (const string& destName : destinations) {
-                auto destIt = rooms.find(destName);
-                if (destIt != rooms.end()) {
+                auto destIt = roomGraph.find(destName);
+                if (destIt != roomGraph.end()) {
 
                     sourceRoom->linkRoom(destIt->second);
                 }
@@ -113,6 +113,16 @@ unordered_map<string, Room*> buildRoomGraph(
         }
     }
 
-    return rooms;
+    return roomGraph;
+}
+
+
+
+
+void deleteRoomGraph(unordered_map<string, Room*>& roomGraph) {
+    for (auto& pair : roomGraph) {
+        delete pair.second;
+    }
+    roomGraph.clear();
 }
 

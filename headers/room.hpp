@@ -42,8 +42,11 @@ public:
 
 // Connections dictionaries
 unordered_map<string, Room*> buildRoomGraph(
-    const unordered_map<string, short>& dico1,
-    const unordered_map<string, vector<string>>& dico2
+    const unordered_map<string, short>& rooms,
+    const unordered_map<string, vector<string>>& connexions
 );
+
+
+void deleteRoomGraph(unordered_map<string, Room*>& roomGraph);
 
 #endif
