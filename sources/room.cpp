@@ -87,50 +87,5 @@ bool Room::isFull() const {
 
 
 
-// Function to build the room graph
-unordered_map<string, Room*> buildRoomGraph(
-    const unordered_map<string, short>& rooms,
-    const unordered_map<string, vector<string>>& connexions
-) {
-    unordered_map<string, Room*> roomGraph;
 
-
-    // Create rooms with max capacity
-    for (const auto& pair : rooms) {
-        const string& name = pair.first;
-        short capacity = pair.second;
-        roomGraph[name] = new Room(name, capacity);
-    }
-
-
-    // Link rooms according to connections
-    for (const auto& pair : connexions) {
-        const string& sourceName = pair.first;
-        const vector<string>& destinations = pair.second;
-
-        auto sourceIt = roomGraph.find(sourceName);
-        if (sourceIt != roomGraph.end()) {
-            Room* sourceRoom = sourceIt->second;
-            for (const string& destName : destinations) {
-                auto destIt = roomGraph.find(destName);
-                if (destIt != roomGraph.end()) {
-
-                    sourceRoom->linkRoom(destIt->second);
-                }
-            }
-        }
-    }
-
-    return roomGraph;
-}
-
-
-
-
-void deleteRoomGraph(unordered_map<string, Room*>& roomGraph) {
-    for (auto& pair : roomGraph) {
-        delete pair.second;
-    }
-    roomGraph.clear();
-}
 
