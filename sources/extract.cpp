@@ -19,35 +19,35 @@ string trim(const string& str) {
 Extract::Extract() : ants(0) {}
 
 // Reads the file, parses each line and extracts the ants, rooms, and connections
-bool Extract::lireFichier(const string& nomFichier) {
-    ifstream fichier(nomFichier);
+bool Extract::readFile(const string& fileName) {
+    ifstream file(fileName);
 
     // Check if the file is successfully opened
-    if (!fichier.is_open()) {
-        cerr << "Erreur : Impossible d'ouvrir le fichier " << nomFichier << endl;
+    if (!file.is_open()) {
+        cerr << "Error: Cannot open file " << fileName << endl;
         return false;
     }
 
-    string ligne;
-    while (getline(fichier, ligne)) {
-        ligne = trim(ligne);
-        if (ligne.empty()) continue; // Skip empty lines
+    string line;
+    while (getline(file, line)) {
+        line = trim(line);
+        if (line.empty()) continue; // Skip empty lines
 
-        size_t posEgal = ligne.find('=');
-        size_t posTiret = ligne.find('-');
+        size_t posEqual = line.find('=');
+        size_t posDash = line.find('-');
 
-        if (posEgal != string::npos) {
+        if (posEqual != string::npos) {
             // Line defines the number of ants (e.g., f=50)
-            ants = static_cast<short>(stoi(trim(ligne.substr(posEgal + 1))));
+            ants = static_cast<short>(stoi(trim(line.substr(posEqual + 1))));
         }
-        else if (posTiret != string::npos) {
+        else if (posDash != string::npos) {
             // Line defines a connection between two rooms (e.g., RoomA - RoomB)
-            string src = trim(ligne.substr(0, posTiret));
-            string dest = trim(ligne.substr(posTiret + 1));
+            string src = trim(line.substr(0, posDash));
+            string dest = trim(line.substr(posDash + 1));
             
             // Add the bidirectional edge to the adjacency list map
-            connexions[src].push_back(dest);
-            connexions[dest].push_back(src);
+            connections[src].push_back(dest);
+            connections[dest].push_back(src);
 
             // Initialize implicit rooms in the rooms map if not already present
             // Start (Sv) and End (Sd) rooms have a large "infinite" capacity
@@ -60,27 +60,27 @@ bool Extract::lireFichier(const string& nomFichier) {
         }
         else {
             // Line defines a room and optionally its capacity (e.g., S1 { 8 } or S2)
-            size_t posAccOuv = ligne.find('{');
-            size_t posAccFer = ligne.find('}');
+            size_t posBraceOpen = line.find('{');
+            size_t posBraceClose = line.find('}');
             
-            string nomRoom;
+            string roomName;
             short capacity = 1; // Default capacity is 1
 
-            if (posAccOuv != string::npos && posAccFer != string::npos && posAccFer > posAccOuv) {
-                nomRoom = trim(ligne.substr(0, posAccOuv));
-                string capStr = trim(ligne.substr(posAccOuv + 1, posAccFer - posAccOuv - 1));
+            if (posBraceOpen != string::npos && posBraceClose != string::npos && posBraceClose > posBraceOpen) {
+                roomName = trim(line.substr(0, posBraceOpen));
+                string capStr = trim(line.substr(posBraceOpen + 1, posBraceClose - posBraceOpen - 1));
                 capacity = static_cast<short>(stoi(capStr));
             }
             else {
-                nomRoom = ligne;
+                roomName = line;
             }
 
             // Register the room and its capacity in the map
-            rooms[nomRoom] = capacity;
+            rooms[roomName] = capacity;
         }
     }
     
-    fichier.close();
+    file.close();
     return true;
 }
 
@@ -93,6 +93,6 @@ const unordered_map<string, short>& Extract::getRooms() const {
 }
 
 // Get the adjacency list representing the connections
-const unordered_map<string, vector<string>>& Extract::getConnexions() const { 
-    return connexions; 
+const unordered_map<string, vector<string>>& Extract::getConnections() const { 
+    return connections; 
 }

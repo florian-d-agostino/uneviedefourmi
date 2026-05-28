@@ -49,7 +49,7 @@ void Link::buildFromExtract(const Extract& extract) {
     }
 
     // 2. Add all links/connections
-    for (const auto& pair : extract.getConnexions()) {
+    for (const auto& pair : extract.getConnections()) {
         const std::string& src = pair.first;
         for (const std::string& dest : pair.second) {
             addlink(src, dest);

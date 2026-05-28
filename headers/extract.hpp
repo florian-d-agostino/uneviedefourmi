@@ -8,14 +8,14 @@ class Extract {
 private:
     short ants;
     std::unordered_map<std::string, short> rooms;
-    std::unordered_map<std::string, std::vector<std::string>> connexions;
+    std::unordered_map<std::string, std::vector<std::string>> connections;
 
 public:
     Extract();
-    bool lireFichier(const std::string& nomFichier);
+    bool readFile(const std::string& fileName);
     short getants() const;
     const std::unordered_map<std::string, short>& getRooms() const;
-    const std::unordered_map<std::string, std::vector<std::string>>& getConnexions() const;
+    const std::unordered_map<std::string, std::vector<std::string>>& getConnections() const;
 };
 
 #endif

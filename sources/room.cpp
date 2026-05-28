@@ -64,7 +64,7 @@ bool Room::enter() {
         return false;
     }
     Ant++;
-    cout << name << " contient " << Ant << " fourmis" << endl;
+    cout << name << " contains " << Ant << " ants" << endl;
     return true;
 }
 
@@ -74,7 +74,7 @@ bool Room::enter() {
 void Room::leave() {
     if (Ant > 0) {
         Ant--;
-        cout << name << " contient " << Ant << " fourmis" << endl;
+        cout << name << " contains " << Ant << " ants" << endl;
     }
 }
 

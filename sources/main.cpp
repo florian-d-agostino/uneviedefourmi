@@ -11,7 +11,7 @@ using namespace std;
 
 int main() {
     Extract extract;
-    extract.lireFichier("ressources/fourmilieres_texte/fourmiliere_1.txt");
+    extract.readFile("ressources/fourmilieres_texte/fourmiliere_1.txt");
     int antCount = extract.getants();
     cout << "Number of ants: " << antCount << endl;
     Link link;
